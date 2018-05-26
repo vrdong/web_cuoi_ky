@@ -6,6 +6,9 @@ var logger = require('morgan');
 var expressHbs = require('express-handlebars');
 var mongoose = require('mongoose');
 var session = require('express-session');
+var passport = require('passport');
+var flash = require('connect-flash');
+
 
 
 var indexRouter = require('./routes/index');
@@ -13,7 +16,8 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 //Connect Database
-mongoose.connect('mongodb://vrdong:Dong123456@ds016298.mlab.com:16298/web_cuoi_ky')
+mongoose.connect('mongodb://vrdong:Dong123456@ds016298.mlab.com:16298/web_cuoi_ky');
+require('./config/passport')
 
 // view engine setup
 app.engine('.hbs',expressHbs({defaultLayout: 'layout', extname: '.hbs'}))
@@ -24,6 +28,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({secret: 'mysupersecret',resave: false, saveUninitialized: false}));
+app.use(flash());
+app.use(passport.initialize());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
