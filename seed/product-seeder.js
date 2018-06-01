@@ -3,24 +3,174 @@ var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://vrdong:Dong123456@ds016298.mlab.com:16298/web_cuoi_ky')
 
-var products =  [
+var products =  [ 
     new Product({
-    imagePath: 'https://www.jinx.com/productimage/7278/382/1/900.jpg',
-    title: 'Team Liquid Jersey Light 2017',
-    description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
-    price: 69.99
+        imagePath: '/images/frames/wood/wood1.jpg',
+        title: 'Khung gỗ đen',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 10,
+        type: 1
     }),
     new Product({
-        imagePath: 'https://www.jinx.com/productimage/7279/136/1/900.jpg',
-        title: 'Team Liquid Jersey Dark 2017',
+        imagePath: '/images/frames/wood/wood2.jpg',
+        title: 'Khung gỗ trắng',
         description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
-        price: 69.99
+        price: 10,
+        type: 1
     }),
     new Product({
-        imagePath: 'https://www.jinx.com/socialimage/7306/387/fb.jpg',
-        title: 'Team Liquid Jersey Pink 2017',
+        imagePath: '/images/frames/wood/wood3.jpg',
+        title: 'Khung gỗ vàng',
         description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
-        price: 69.99
+        price: 10,
+        type: 1
+    }),
+    new Product({
+        imagePath: '/images/frames/wood/wood4.jpg',
+        title: 'Khung gỗ đen dày',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 15,
+        type: 1
+    }),
+    new Product({
+        imagePath: '/images/frames/wood/wood5.jpg',
+        title: 'Khung gỗ vàng cổ điển',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 20,
+        type: 1
+    }),
+    new Product({
+        imagePath: '/images/frames/wood/wood6.jpg',
+        title: 'Khung gỗ nâu',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 20,
+        type: 1
+    }),
+    new Product({
+        imagePath: '/images/frames/wood/wood7.jpg',
+        title: 'Khung gỗ vàng hiện đại',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 25,
+        type: 1
+    }),
+    new Product({
+        imagePath: '/images/frames/wood/wood8.jpg',
+        title: 'Khung gỗ vàng hoa văn',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 20,
+        type: 1
+    }),
+    new Product({
+        imagePath: '/images/frames/composite/composite1.jpg',
+        title: 'Khung composite vàng',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 10,
+        type: 2
+    }),
+    new Product({
+        imagePath: '/images/frames/composite/composite2.jpg',
+        title: 'Khung composite nâu',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 10,
+        type: 2
+    }),
+    new Product({
+        imagePath: '/images/frames/composite/composite3.jpg',
+        title: 'Khung composite trắng',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 10,
+        type: 2
+    }),
+    new Product({
+        imagePath: '/images/frames/composite/composite4.jpg',
+        title: 'Khung composite vàng hoa văn',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 15,
+        type: 2
+    }),
+    new Product({
+        imagePath: '/images/frames/composite/composite5.jpg',
+        title: 'Khung composite trắng hoa văn',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 15,
+        type: 2
+    }),
+    new Product({
+        imagePath: '/images/frames/composite/composite6.jpg',
+        title: 'Khung composite trắng hoa văn 2',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 15,
+        type: 2
+    }),
+    new Product({
+        imagePath: '/images/frames/composite/composite7.jpg',
+        title: 'Khung composite trắng cổ điển',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 20,
+        type: 2
+    }),
+    new Product({
+        imagePath: '/images/frames/composite/composite8.jpg',
+        title: 'Khung composite trắng hiện đại',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 20,
+        type: 2
+    }),
+    new Product({
+        imagePath: '/images/frames/combo/set1.jpg',
+        title: 'Khung tranh treo tường bộ 1',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 50,
+        type: 3
+    }),
+    new Product({
+        imagePath: '/images/frames/combo/set2.jpg',
+        title: 'Khung tranh treo tường bộ 2',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 50,
+        type: 3
+    }),
+    new Product({
+        imagePath: '/images/frames/combo/set3.jpg',
+        title: 'Khung tranh treo tường bộ 3',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 50,
+        type: 3
+    }),
+    new Product({
+        imagePath: '/images/frames/combo/set4.jpg',
+        title: 'Khung tranh treo tường bộ 4',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 75,
+        type: 3
+    }),
+    new Product({
+        imagePath: '/images/frames/combo/set5.jpg',
+        title: 'Khung tranh treo tường bộ 5',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 80,
+        type: 3
+    }),
+    new Product({
+        imagePath: '/images/frames/combo/set6.jpg',
+        title: 'Khung tranh treo tường bộ 6',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 80,
+        type: 3
+    }),
+    new Product({
+        imagePath: '/images/frames/combo/set7.jpg',
+        title: 'Khung tranh treo tường bộ 7',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 100,
+        type: 3
+    }),
+    new Product({
+        imagePath: '/images/frames/combo/set8.jpg',
+        title: 'Khung tranh treo tường bộ 8',
+        description: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
+        price: 100,
+        type: 3
     })
 ];
 

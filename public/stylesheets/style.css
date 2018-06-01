@@ -1,8 +1,180 @@
-.card .card-text{
-    color: #7f7f7f; 
+/*General*/
+.container-fuild{
+    margin-left: auto;
+    margin-right: auto;
+}
+/* Header */
+.header{
+    height: 70px;
 }
 
-.price{
-    font-weight: bold;
-    font-size: 16px;
+/* Navbar */
+.navbar-brand{
+    width: 70px;
+    height: 70px;
+}
+
+/* Carousel */
+.carouselcontainer{
+    width: 90%;
+}
+
+.carouselcontainer img{
+    margin-top: 80px;
+    height: 600px;
+}
+
+
+.otherddetails { 
+  
+    margin:30px auto 0 auto;
+    position: relative;
+   
+}
+.otherddetails .otherddetailspart { 
+    background:url(../images/otherseperate.png) no-repeat right center;
+    width:25%; 
+    float:left;
+    display: block; 
+}
+.otherddetails .otherddetailspart:last-child {background:none}
+.otherddetails .otherddetailspart .innerclass { padding:25px 0px 25px 90px; background:url(../images/otherdetailicon.png) no-repeat 10px top; }
+.otherddetails .otherddetailspart .innerclass h2 { font-size:20px; color:#5e626b;  line-height:normal; margin:0px }
+.otherddetails .otherddetailspart .innerclass.free { background-position: 20px 29px }
+.otherddetails .otherddetailspart .innerclass.payment { background-position: 20px -103px }
+.otherddetails .otherddetailspart .innerclass.shipping { background-position: 20px -240px }
+.otherddetails .otherddetailspart .innerclass.choice { background-position: 20px -360px }
+
+/* Product */
+.containerproduct {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+.heading1 { 
+    margin-bottom:40px; 
+    border-bottom:1px solid #efefef; 
+    margin-top:0px ; 
+    font-size:34px
+}
+
+.heading1 .subtext { 
+    font-size:16px; 
+    color:#96979d; 
+    text-transform:none; 
+    font-weight:normal;
+    padding:0px;
+}
+
+.heading1 .maintext { 
+    font-size:28px; color:#5e626b; 
+    text-transform:uppercase; 
+    padding: 0px 14px 4px 0; 
+    font-family: 'Crete Round', serif;
+}
+
+.btnviewmore{
+    margin-top: 5px;
+    float: right;
+}
+
+#foot{
+    width: 100%;
+    margin: auto;
+    background-color: #353E4F;  
+    position: relative;
+}
+
+footer .icon-background1 {
+	color: #202734;
+	border: 1px solid #fff;
+	border-radius: 25vw;
+}
+
+footer .icon-background2 {
+	color: #202734;
+	border: 1px solid #fff;
+    border-radius: 25vw;
+}
+
+footer .icon-background3 {
+	color: #202734;
+	border: 1px solid #fff;
+	border-radius: 25vw;
+}
+
+footer .icon-background4 {
+	color: #202734;
+	border: 1px solid #fff;
+	border-radius: 25vw;
+}
+
+.fa-stack{
+    margin: 10px 10px;
+}
+
+footer .fa-stack:hover .icon-background1 {
+    color: #4A00A9;
+    transition-duration: 400ms;
+    transition-timing-function: linear;
+ }
+footer .fa-stack:hover .icon-background2 {
+    color: #D00000;
+    transition-duration: 400ms;
+    transition-timing-function: linear;
+ }
+ footer .fa-stack:hover .icon-background3 {
+    color: #3696F5;
+    transition-duration: 400ms;
+    transition-timing-function: linear;
+ }
+ footer .fa-stack:hover .icon-background4 {
+    color: #4B669B;
+    transition-duration: 400ms;
+    transition-timing-function: linear;
+ }
+
+ .iconfanpage{
+
+ }
+
+ footer .service-info li a {
+	text-decoration: none;
+	color:#A6B6BD;
+	font-weight: 150;
+}
+
+footer .service-info li a:hover {
+	text-decoration: none;
+	color:#8B8B92;
+}
+
+footer .service-info div>ul li {
+	color: white;
+	margin-left: -3em;
+	list-style-type: none;
+	margin-bottom: 8px;
+}
+
+.service-info p{
+    color:#A6B6BD;
+    font-weight: 150;
+}
+
+.service-info p:hover{
+    color:#8B8B92;
+}
+
+#copyright{
+    margin-top: 20px;
+    font-weight: 150;
+}
+
+.footer-title{
+    color:#A6B6BD;
+}
+
+containerfooter{
+  
 }

@@ -1,0 +1,52 @@
+ <link rel='stylesheet' href='../public/stylesheets/shopping-cart.css' />
+<div class="container">
+    <table id="cart" class="table table-hover table-condensed">
+        <thead>
+            <tr>
+                <th style="width:60%">Product</th>
+                <th style="width:10%">Price</th>
+                <th style="width:10%">Quantity</th>
+                <th style="width:10%" class="text-center">Subtotal</th>
+                <th style="width:10%"></th>
+            </tr>
+        </thead>
+        {{#if products}}
+        <tbody>
+            {{#each products}}
+            <tr>
+                <td data-th="Product">
+                    <div class="row">
+                        <div class="col-sm-2"><img src="{{this.item.imagePath}}" alt="..." class="img-responsive" style="width: 100px ; height: 100px"></div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-9">
+                            <h4 class="">{{this.item.title}}</h4>
+                            <p>{{this.item.description}}</p>
+                        </div>
+                    </div>
+                </td>
+                <td data-th="Price">${{this.item.price}}</td>
+                <td data-th="Quantity">
+                    <input type="number" class="form-control text-center" value="{{this.qty}}" id="quantity">
+                </td>
+                <td data-th="Subtotal" class="text-center">{{this.price}}</td>
+                <td class="actions" data-th="">
+                    <button class="btn btn-info btn-sm"><i class="fas fa-sync-alt"></i></button>
+                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>								
+                </td>
+            </tr>
+            {{/each}}   
+        </tbody>
+        {{else}}
+            <div>No Items In Cart</div>
+        {{/if}}
+       
+        <tfoot>
+            <tr>
+                <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+                <td colspan="2" class=""></td>
+                <td class="text-center"><strong>{{totalPrice}}</strong></td>
+                <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
