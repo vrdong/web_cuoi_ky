@@ -1,9 +1,19 @@
 var Cart = require('../models/cart');
 module.exports = function (app, paypal) {
     app.post('/paypal', function (req, res, next) {
-        console.log('asdkjasdljaldj');
-        //var cart = new Cart(req.session.cart);
-        console.log(req.session.cart);
+        var cart = new Cart(req.session.cart);
+        var items = [];
+        var arr = cart.generateArray();
+        for (var i = 0; i < arr.length; i++) {
+            items.push({"name": arr[i].item.title, 
+            "sku": arr[i].item.description,  
+            "price": arr[i].item.price.toString(), 
+            "currency": "USD", 
+            "quantity": arr[i].qty })
+        }
+        console.log(items);
+        var amount = {"currency": "USD","total": cart.totalPrice.toString()};
+        console.log(amount);
         var create_payment_json = {
             "intent": "sale",
             "payer": {
@@ -15,18 +25,9 @@ module.exports = function (app, paypal) {
             },
             "transactions": [{
                 "item_list": {
-                    "items": [{
-                        "name": "item",
-                        "sku": "item",
-                        "price": "10.00",
-                        "currency": "USD",
-                        "quantity": 1
-                    }]
+                    "items": items
                 },
-                "amount": {
-                    "currency": "USD",
-                    "total": "10.00"
-                },
+                "amount": amount,
                 "description": "This is the payment description."
             }]
         };
@@ -48,13 +49,12 @@ module.exports = function (app, paypal) {
     app.get('/success', function (req, res) {
         const payerId = req.query.PayerID;
         const paymentId = req.query.paymentId;
+        var cart = new Cart(req.session.cart);
+        var amount = {"currency": "USD","total": cart.totalPrice.toString()};
         var execute_payment_json = {
             "payer_id": payerId,
             "transactions": [{
-                "amount": {
-                    "currency": "USD",
-                    "total": "10.00"
-                }
+                "amount": amount
             }]
         };
         paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
@@ -69,7 +69,7 @@ module.exports = function (app, paypal) {
     });
 
     app.get('/cancel', function (req, res) {
-        res.send('canceld!')
+        res.send('cancel!')
     })
 
 }
