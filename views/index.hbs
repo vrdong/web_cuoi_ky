@@ -62,13 +62,13 @@
     </h1>
     <div class="row">
     {{#each this.products}}
-        <div class="col-md-3">
-        <div class="card d-flex h-100" style="width: 18rem;">
+		<div class="khung-t cl-go kt-1 col-lg-3 col-md-4 col-sm-6" id="items">
+        <div class="card d-flex h-100">
             <img class="card-img-top  images rounded img-thumbnail" src="{{this.imagePath}}" alt="Card image cap">
             <div class="card-body overlay rounded">
                 <h5 class="card-title">{{this.title}}</h5>
                 <p class="card-text">{{this.description}}</p>
-                <div class="price">${{this.price}}</div>
+                <div class="price">Price: ${{this.price}}</div>
                 <a href="/add-to-cart/{{this._id}}" class="btn btn-success">Add to Cart</a>
             </div>
         </div>
