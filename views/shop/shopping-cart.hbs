@@ -1,5 +1,5 @@
- <link rel='stylesheet' href='../public/stylesheets/shopping-cart.css' />
-<div class="container">
+<link rel='stylesheet' href='../public/stylesheets/shopping-cart.css' />
+<div class="container containercart">
     <table id="cart" class="table table-hover table-condensed">
         <thead>
             <tr>
@@ -45,8 +45,12 @@
                 <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
                 <td colspan="2" class=""></td>
                 <td class="text-center"><strong>{{totalPrice}}</strong></td>
-                <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+                <td><a href="/checkout" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
             </tr>
         </tfoot>
     </table>
+    <form action="/paypal" method="POST">
+        <input type="submit" value="Submit">
+    </form>
+    <div style="height: 120px"></div>
 </div>

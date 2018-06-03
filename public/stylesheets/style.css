@@ -175,6 +175,14 @@ footer .service-info div>ul li {
     color:#A6B6BD;
 }
 
-containerfooter{
-  
+.containercart{
+    margin-top: 100px;
+}
+
+.containercheckout{
+    margin-top: 100px;
+}
+
+.containerfooter{
+    margin-top: 100px;
 }

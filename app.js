@@ -11,11 +11,21 @@ var flash = require('connect-flash');
 var validator = require('express-validator');
 var bodyParser = require('body-parser');
 var MongoStore = require('connect-mongo')(session);
+var paypal = require('paypal-rest-sdk');
 
+paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': 'AfSv4pORZx4vYxm-p53dVf7vsZJsWp08rni4-2ZbvaMWBxudPjIFK7KDn50xmpi9VgllWdm9LVtk6ahJ',
+  'client_secret': 'EOKi31uziK_twnX-AGiQrjOfB0OuNBekekUwtz42JzGyxV6YJm74TQg_YrgQgXu6KFJ49JzCkL7-_Vho'
+});
+
+var app = express();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users', );
 
-var app = express();
+// rồi giờ bên file payment, m muốn hàm nào thì viết ở trỏng xóa bên index.js đi
+//cho nayt
+
 //Connect Database
 mongoose.connect('mongodb://vrdong:Dong123456@ds016298.mlab.com:16298/web_cuoi_ky');
 require('./config/passport')
@@ -52,6 +62,7 @@ app.use(function(req, res, next){
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+require('./routes/payment')(app, paypal)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
