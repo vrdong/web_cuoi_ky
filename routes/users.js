@@ -25,8 +25,8 @@ router.get('/signup', function (req, res, next) {
   res.render('users/signup', { csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0 });
 });
 
-router.post('/signup', passport.authenticate('local.signup', {
-  successRedirect: '/users/profile',
+router.post('/signup',passport.authenticate('local.signup',{
+  successRedirect: '/',
   failureRedirect: '/users/signup',
   failureFlash: true
 }))
@@ -36,8 +36,8 @@ router.get('/signin', function (req, res, next) {
   res.render('users/signin', { csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0 });
 })
 
-router.post('/signin', passport.authenticate('local.signin', {
-  successRedirect: '/users/profile',
+router.post('/signin',passport.authenticate('local.signin',{
+  successRedirect: '/',
   failureRedirect: '/users/signin',
   failureFlash: true
 }))

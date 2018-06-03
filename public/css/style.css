@@ -1,0 +1,13 @@
+/* user-defined style */
+#foot {
+	padding-top: 20px;
+}
+
+#nocarousel {
+	padding-top: 100px;
+	padding-bottom: 20px;
+}
+
+#hascarousel {
+	padding-bottom: 20px;
+}
