@@ -9,12 +9,12 @@ An E-commerce web front-end allow customer to choose, design and buy own frames.
 * Bootstrap 4, HTML, CSS3, JQuery.
 
 ## Images
-![alt text](https://imgur.com/06wzoAg)
-![alt text](https://imgur.com/knY4qwI)
-![alt text](https://i.imgur.com/M6VkzO1.png)
-![alt text](https://i.imgur.com/5Yv4A4x.png)
-![alt text](https://i.imgur.com/y1jUbPc.png)
-![alt text](https://i.imgur.com/y806KTc.png)
+![alt text](https://i.imgur.com/06wzoAg.png)
+![alt text](https://i.imgur.com/knY4qwI.png)
+![alt text](https://i.imgur.com/DD3m6Ra.png)
+![alt text](https://i.imgur.com/vQI5BtJ.png)
+![alt text](https://i.imgur.com/XbIjhR1.png)
+![alt text](https://i.imgur.com/iSdv1Sz.png)
 
 ## Built with
 * Image-Framer-jquery-plugin - Joonas Pääkkö 
