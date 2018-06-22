@@ -12,6 +12,8 @@ var validator = require('express-validator');
 var bodyParser = require('body-parser');
 var MongoStore = require('connect-mongo')(session);
 var paypal = require('paypal-rest-sdk');
+const multer = require('multer');
+
 
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
@@ -21,7 +23,7 @@ paypal.configure({
 
 var app = express();
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users', );
+var usersRouter = require('./routes/users');
 
 // rồi giờ bên file payment, m muốn hàm nào thì viết ở trỏng xóa bên index.js đi
 //cho nayt
@@ -61,6 +63,7 @@ app.use(function(req, res, next){
 })
 
 app.use('/', indexRouter);
+//require('./routes/users')(upload)
 app.use('/users', usersRouter);
 require('./routes/payment')(app, paypal)
 

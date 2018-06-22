@@ -12,88 +12,66 @@
 			</ul>
 			<div class="tab-content p-b-3">
 				<div class="tab-pane active" id="profile">
-					<h4 class="m-y-2">UserName</h4>
+					<h4 class="m-y-2">{{name}}</h4>
 					<div class="row">
 						<div class="col-md-6">
-							<p>Name</p>
-							<p>Email</p>
-							<p>Address</p>
+							<p>Email: {{email}}</p>
+							<p>Address: {{address}}</p>
 						</div>
 					</div>
 					<!--/row-->
 				</div>
 				<div class="tab-pane" id="edit">
 					<h4 class="m-y-2">Edit Profile</h4>
-					<form role="form">
+					<form role="form" method="POST" action="/users/profile">
 						<div class="form-group row">
 							<label class="col-lg-3 col-form-label form-control-label">First name</label>
 							<div class="col-lg-9">
-								<input class="form-control" type="text" value="Jane">
+								<input class="form-control" type="text" value="{{firstname}}" name="firstname">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-lg-3 col-form-label form-control-label">Last name</label>
 							<div class="col-lg-9">
-								<input class="form-control" type="text" value="Bishop">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label class="col-lg-3 col-form-label form-control-label">Email</label>
-							<div class="col-lg-9">
-								<input class="form-control" type="email" value="email@gmail.com">
+								<input class="form-control" type="text" value="{{lastname}}" name="lastname">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-lg-3 col-form-label form-control-label">Address</label>
 							<div class="col-lg-9">
-								<input class="form-control" type="text" value="" placeholder="Street">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label class="col-lg-3 col-form-label form-control-label"></label>
-							<div class="col-lg-6">
-								<input class="form-control" type="text" value="" placeholder="City">
-							</div>
-							<div class="col-lg-3">
-								<input class="form-control" type="text" value="" placeholder="State">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label class="col-lg-3 col-form-label form-control-label">Username</label>
-							<div class="col-lg-9">
-								<input class="form-control" type="text" value="janeuser">
+								<input class="form-control" type="text" value="{{address}}" name="address">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-lg-3 col-form-label form-control-label">Password</label>
 							<div class="col-lg-9">
-								<input class="form-control" type="password" value="11111122333">
+								<input class="form-control" type="password" value="" name="password">
 							</div>
-						</div>
-						<div class="form-group row">
-							<label class="col-lg-3 col-form-label form-control-label">Confirm password</label>
-							<div class="col-lg-9">
-								<input class="form-control" type="password" value="11111122333">
-							</div>
-						</div>
-						<div class="form-group row">
+						</div>		
 							<label class="col-lg-3 col-form-label form-control-label"></label>
 							<div class="col-lg-9">
 								<input type="reset" class="btn btn-secondary" value="Cancel">
 								<input type="submit" class="btn btn-primary" value="Save Changes">
-							</div>
-						</div>
+							</div> 
 					</form>
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-4 pull-lg-8 text-xs-center">
-			<img src="//placehold.it/150" class="m-x-auto img-fluid img-circle" alt="avatar">
-			<h6 class="m-t-2">Upload a different photo</h6>
-			<label class="custom-file">
-				<input type="file" id="file" class="custom-file-input">
-				<span class="custom-file-control btn btn-primary ">Choose file</span>
-			</label>
+		<div class="col-lg-4 pull-lg-8 text-xs-center" style="margin-bottom: 100px">
+			<img src={{file}} alt="avatar" class="m-x-auto img-fluid" style="width:150px; height:150px">
+			<form action="/users/upload" method="POST" enctype="multipart/form-data" class="custom-file">
+				<input name="myImage" type="file">
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+			{{#if hasErrors}} {{#each messages}}
+			<div class="alert alert-danger">
+				<p>{{this}}</p>
+			</div>
+			{{/each}} {{else}} {{#each messages}}
+			<div class="alert alert-success">
+				<p>{{this}}</p>
+			</div>
+			{{/each}} {{/if}}
 		</div>
 	</div>
 </div>
