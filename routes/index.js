@@ -3,6 +3,7 @@ var router = express.Router();
 var Product = require('../models/product');
 var Cate = require('../models/category');
 var Cart = require('../models/cart');
+var Order =  require('../models/order');
 
 
 /* GET home page. */
@@ -55,4 +56,39 @@ router.get('/checkout', function (req, res, next) {
   res.render('shop/checkout', {  products: cart.generateArray(), totalPrice: cart.totalPrice, totalQty: cart.totalQty});
 
 })
+router.get('/paymentmethod', function(req, res, next){
+  res.render('shop/paymentmethod');
+})
+
+router.post('/order', function(req, res, next){
+  var cart = new Cart(req.session.cart);
+  var paymentId = req.user._id + '-' + Date.now();
+  var order =  new Order({
+    user: req.user,
+    cart: cart,
+    address: req.body.address,
+    phone: req.body.phone,
+    name: req.body.firstname + ' ' +  req.body.lastname,
+    status: 'pending',
+    type: 0,
+    paymentId: paymentId
+  });
+  //  console.log(paymentId);
+  req.session.paymentId = paymentId;
+ // console.log(req.session.paymentId);
+  order.save(function(err, result){
+    //console.log(err);
+  })
+  res.redirect('/paymentmethod');
+})
+
+router.post('/cod', function(req, res, next){
+  //console.log(req.session.paymentId);
+  Order.collection.updateOne({paymentId: req.session.paymentId}, {'$set' : {type: 1}},{ upsert: true });
+  req.session.cart = null;
+  req.session.paymentId = null;
+  res.redirect('/');
+})
+
+
 module.exports = router;

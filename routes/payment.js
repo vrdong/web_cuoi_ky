@@ -1,4 +1,5 @@
 var Cart = require('../models/cart');
+var Order = require('../models/order');
 module.exports = function (app, paypal) {
     app.post('/paypal', function (req, res, next) {
         var cart = new Cart(req.session.cart);
@@ -31,8 +32,6 @@ module.exports = function (app, paypal) {
                 "description": "This is the payment description."
             }]
         };
-
-
         paypal.payment.create(create_payment_json, function (error, payment) {
             if (error) {
                 throw error;
@@ -45,7 +44,6 @@ module.exports = function (app, paypal) {
             }
         });
     })
-    // bị sao v ta đờ mờ
     app.get('/success', function (req, res) {
         const payerId = req.query.PayerID;
         const paymentId = req.query.paymentId;
@@ -63,13 +61,17 @@ module.exports = function (app, paypal) {
                 throw error;
             } else {
                 console.log(JSON.stringify(payment));
-                res.send('Success')
+                //res.send('Success')
+                Order.collection.updateOne({paymentId: req.session.paymentId}, {'$set' : {type: 2, status: 'complete'}},{ upsert: true });
+                req.flash('success', 'Successfully bought product!');
+                //console.log(paymentId);   
+                req.session.cart = null;
+                req.session.paymentId = null; 
+                res.redirect('/');     
             }
         });
     });
-
     app.get('/cancel', function (req, res) {
-        res.send('cancel!')
+        return res.redirect('/checkout');
     })
-
 }
