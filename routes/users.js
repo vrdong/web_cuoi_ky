@@ -4,37 +4,39 @@ var passport = require('passport');
 const request = require('request');
 const multer = require('multer');
 var path = require('path');
-var User = require('../models/user')
+var User = require('../models/user');
+var Order = require('../models/order');
+var Cart =  require('../models/cart');
 
 //Set Storage 
 const storage = multer.diskStorage({
   destination: './public/uploads/',
-  filename: function(req, file, cb){
-      cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
 });
 
 // Init Upload
 const upload = multer({
   storage: storage,
-  limits:{fileSize: 10000000},
-  fileFilter: function(req, file, cb){
-      checkFileType(file, cb);
+  limits: { fileSize: 10000000 },
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb);
   }
 }).single('myImage');
 
-function checkFileType(file, cb){
+function checkFileType(file, cb) {
   // Allowed ext
   const filetypes = /jpeg|jpg|png|gif/;
-  
+
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-  
+
   const mimetype = filetypes.test(file.mimetype);
 
-  if(mimetype && extname){
-      return cb(null,true);
+  if (mimetype && extname) {
+    return cb(null, true);
   } else {
-      cb('Error: Images Only!');
+    cb('Error: Images Only!');
   }
 }
 
@@ -48,83 +50,97 @@ router.post('/upload', (req, res) => {
     var messages = [];
     if (err) {
       messages = [err];
-      res.render('users/profile', {hasErrors: 1, messages: messages });
+      res.render('users/profile', { hasErrors: 1, messages: messages });
     } else {
       if (req.file == undefined) {
         messages = ['Error: No File Selected!'];
-        res.render('users/profile', {hasErrors: 1, messages: messages });
+        res.render('users/profile', { hasErrors: 1, messages: messages });
       } else {
-        User.collection.updateOne({_id: req.user._id},{'$set' : {imagePath: req.file.filename}},{ upsert: true });
-        User.findOne({_id: req.user._id}).then((user) =>{
+        User.collection.updateOne({ _id: req.user._id }, { '$set': { imagePath: req.file.filename } }, { upsert: true });
+        User.findOne({ _id: req.user._id }).then((user) => {
           messages = ['File Uploaded!'];
-          if(user.imagePath == undefined){
+          if (user.imagePath == null) {
             imagePath = "http://via.placeholder.com/150x150";
-          }else{
+          } else {
             imagePath = user.imagePath;
           }
-          if(user.firstname == undefined && user.lastname == undefined){
+          if (user.firstname == undefined && user.lastname == undefined) {
             name = "Anonymous"
             firstname = "none";
             lastname = "none";
-          }else{
+          } else {
             name = firstname + lastname;
           }
-          if(user.address == undefined){
+          if (user.address == undefined) {
             address = "Somewhere";
-          }else{
+          } else {
             address = user.address;
           }
-          res.render('users/profile',{hasErrors: 0, messages: messages,email: user.email, file: `/uploads/${imagePath}`, name: name, address: address, firstname: user.firstname, lastname: user.lastname  })
+          res.render('users/profile', { hasErrors: 0, messages: messages, email: user.email, file: `/uploads/${imagePath}`, name: name, address: address, firstname: user.firstname, lastname: user.lastname })
         })
       }
     }
   });
 });
 
-router.post('/profile', function(req, res, next){
-  if(req.body.firstname != null){
-    User.collection.updateOne({_id: req.user._id},{'$set' : {firstname: req.body.firstname}},{ upsert: true });
+router.post('/profile', function (req, res, next) {
+  if (req.body.firstname != null) {
+    User.collection.updateOne({ _id: req.user._id }, { '$set': { firstname: req.body.firstname } }, { upsert: true });
   }
 
-  if(req.body.lastname != null){
-    User.collection.updateOne({_id: req.user._id},{'$set' : {lastname: req.body.lastname}},{ upsert: true });
+  if (req.body.lastname != null) {
+    User.collection.updateOne({ _id: req.user._id }, { '$set': { lastname: req.body.lastname } }, { upsert: true });
   }
-  
-  if(req.body.address != null){
-    User.collection.updateOne({_id: req.user._id},{'$set' : {address: req.body.address}},{ upsert: true });
+
+  if (req.body.address != null) {
+    User.collection.updateOne({ _id: req.user._id }, { '$set': { address: req.body.address } }, { upsert: true });
   }
   // console.log(req.body.password);
-  if(req.body.password != null){
-    var newUser =  User();
+  if (req.body.password != null) {
+    var newUser = User();
     newUser.password = newUser.encryptPassword(req.body.password);
-    User.collection.updateOne({_id: req.user._id},{'$set' : {password: newUser.password}},{ upsert: true });
+    User.collection.updateOne({ _id: req.user._id }, { '$set': { password: newUser.password } }, { upsert: true });
   }
   res.redirect('/users/profile');
 })
 router.use(csrfProtection);
 
 router.get('/profile', isLoggedIn, function (req, res, next) {
- // passport.deserializeUser();
-  //console.log(req.user._id);  
-  User.findOne({_id: req.user._id}).then((user) =>{
-    if(user.imagePath == undefined){
+  Order.find({user: req.user},function(err, orders){
+    if(err){
+      return res.write('Error');
+    }
+    req.session.historyOrder = orders; 
+  });
+  User.findOne({ _id: req.user._id }).then((user) => {
+    if (user.imagePath == undefined) {
       imagePath = "http://via.placeholder.com/150x150";
-    }else{
+    } else {
       imagePath = `/uploads/${user.imagePath}`;
     }
-    if(user.firstname == undefined && user.lastname == undefined){
+    if (user.firstname == undefined && user.lastname == undefined) {
       name = "Anonymous"
       firstname = "none";
       lastname = "none";
-    }else{
+    } else {
       name = user.firstname + user.lastname;
     }
-    if(user.address == undefined){
+    if (user.address == undefined) {
       address = "Somewhere";
-    }else{
+    } else {
       address = user.address;
     }
-    res.render('users/profile',{email: user.email, file: imagePath, name: name, address: address, firstname: user.firstname, lastname: user.lastname  })
+    orders = req.session.historyOrder;
+    var cart;
+    orders.forEach(function(order){
+      cart = new Cart(order.cart);
+      var x = cart.generateArray();
+      order.item = null;
+      order.item = x;
+      //console.log(order.item);
+    })
+    //console.log(orders);
+    res.render('users/profile', { email: user.email, file: imagePath, name: name, address: address, firstname: user.firstname, lastname: user.lastname, orders: orders })
   })
 })
 
@@ -143,10 +159,16 @@ router.get('/signup', function (req, res, next) {
 });
 
 router.post('/signup', passport.authenticate('local.signup', {
-  successRedirect: '/',
   failureRedirect: '/users/signup',
   failureFlash: true
-}))
+}), function (req, res, next) {
+  if (req.session.oldUrl) {
+    var oldUrl = req.session.oldUrl;
+    req.session.oldUrl = null;
+    res.redirect(oldUrl);
+  }else{
+    res.redirect('/users/profile');
+}})
 
 router.get('/signin', function (req, res, next) {
   var messages = req.flash('error')
@@ -183,10 +205,18 @@ router.post('/signin', function (req, res, next) {
   })
 
 }, passport.authenticate('local.signin', {
-  successRedirect: '/',
+  // successRedirect: '/',
   failureRedirect: '/users/signin',
   failureFlash: true
-}))
+}), function (req, res, next) {
+  if (req.session.oldUrl) {
+    var oldUrl = req.session.oldUrl;
+    req.session.oldUrl = null;
+    res.redirect(oldUrl);
+  }else{
+    res.redirect('/users/profile');
+  }
+})
 
 
 
@@ -204,5 +234,5 @@ function notLoggedIn(req, res, next) {
     return next();
   }
   res.redirect('/');
-}
+} 
 

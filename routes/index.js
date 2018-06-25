@@ -48,7 +48,7 @@ router.get('/shopping-cart', function (req, res, next) {
 
 
 // Checkout
-router.get('/checkout', function (req, res, next) {
+router.get('/checkout',isLoggedIn, function (req, res, next) {
   if (!req.session.cart) {
     return res.redirect('/shopping-cart');
   }
@@ -92,3 +92,18 @@ router.post('/cod', function(req, res, next){
 
 
 module.exports = router;
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  req.session.oldUrl = req.url;
+  res.redirect('/users/signin');
+}
+
+function notLoggedIn(req, res, next) {
+  if (!req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/');
+}
+
