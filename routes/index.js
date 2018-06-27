@@ -90,6 +90,10 @@ router.post('/cod', function(req, res, next){
   res.redirect('/');
 })
 
+router.get('/design', function(req, res, next){
+  res.render('design.hbs');
+})
+
 
 module.exports = router;
 function isLoggedIn(req, res, next) {
