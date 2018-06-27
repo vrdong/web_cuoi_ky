@@ -96,6 +96,22 @@ router.get('/design', function(req, res, next){
   res.render('design.hbs');
 })
 
+router.get('/more', function (req, res, next) {
+  Cate.find().then(function (cates) {
+    Product.find({ type: 1 }).then((woods) => {
+      Product.find({ type: 2 }).then((composites) => {
+        Product.find({ type: 3 }).then((combos) => {
+          var Category = [];
+          Category.push({ cate: cates[0], products: woods });
+          Category.push({ cate: cates[1], products: composites });
+          Category.push({ cate: cates[2], products: combos });
+          res.render('more.hbs', { cates: Category });
+        })
+      })
+    })
+  })
+});
+
 
 module.exports = router;
 function isLoggedIn(req, res, next) {

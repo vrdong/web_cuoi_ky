@@ -1,5 +1,7 @@
-var imghtml = '<img class="framed-image" src="#" alt="picture to be framed">';
+var imghtml = '<img class="framed-image img-responsive" src="#" alt="picture to be framed">';
 var imgurl;
+var uploadCrop;
+var firsttime = true;
 $(document).ready(function(){
 
     $('.khung-t').click(function(){
@@ -36,20 +38,61 @@ $(document).ready(function(){
     })
 })
 function readURL(input) {
+    if (firsttime) {
+        uploadCrop = $('#upload-img').croppie({
+            viewport: {
+                width: 400,
+                height: 300,
+                type: 'square'
+            },
+            boundary: {
+                width: 500,
+                height: 500
+            }
+        });
+        firsttime = false;
+    } 
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
             imgurl = e.target.result;
-            var container = document.getElementById('framed-image-container');
+            /*var container = document.getElementById('framed-image-container');
             container.innerHTML = '';
             container.innerHTML = imghtml;
             $('.framed-image')
-                .attr('src', imgurl);
-            $('.framed-image').croppie({
+                .attr('src', imgurl);*/
+            uploadCrop.croppie('bind', {
+                url: imgurl
             });
         };
 
         reader.readAsDataURL(input.files[0]);
     }
+}
+function Crop() {
+    uploadCrop.croppie('result', {
+        type: 'canvas',
+        size: 'viewport'
+    }).then(function (resp) {
+        imgurl = resp;
+        var container = document.getElementById('framed-image-container');
+        container.innerHTML = '';
+        container.innerHTML = imghtml;
+        $('.framed-image')
+            .attr('src', imgurl);
+    });
+}
+function Full() {
+    uploadCrop.croppie('result', {
+        type: 'canvas',
+        size: 'original'
+    }).then(function (resp) {
+        imgurl = resp;
+        var container = document.getElementById('framed-image-container');
+        container.innerHTML = '';
+        container.innerHTML = imghtml;
+        $('.framed-image')
+            .attr('src', imgurl);
+    });
 }
