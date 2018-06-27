@@ -9,6 +9,8 @@ var userSchema = new Schema({
     firstname: {type: String, require: true},
     lastname: {type: String, require: true},
     address: {type: String, require: true},
+    admin: {type: Number, required: true},
+    banned: {type: Boolean, required: true}
 });
 
 userSchema.methods.encryptPassword =  function(password){

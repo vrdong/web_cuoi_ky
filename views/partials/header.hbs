@@ -1,8 +1,10 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
 	<!--LOGO-->
-	<a href="/"><img class="navbar-brand" src="/images/logo.png" alt="logo"></a>
+	<a href="/">
+		<img class="navbar-brand" src="/images/logo.png" alt="logo">
+	</a>
 	<button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-		aria-expanded="false" aria-label="Toggle navigation">
+	 aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<!--COLLAPSE NAVBAR-->
@@ -16,12 +18,13 @@
 		<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 			<li class="nav-item active">
 				<a class="nav-link" href="/">
-                    <i class="fas fa-home"></i> Home<span class="sr-only">(current)</span>
+					<i class="fas fa-home"></i> Home
+					<span class="sr-only">(current)</span>
 				</a>
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-images"></i> Models
+					<i class="fas fa-images"></i> Models
 				</a>
 				<div class="dropdown-menu" aria-labelledby="dropdownId">
 					<a class="classify all     dropdown-item" href="#">All</a>
@@ -32,7 +35,7 @@
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-gem"></i> Materials
+					<i class="fas fa-gem"></i> Materials
 				</a>
 				<div class="dropdown-menu" aria-labelledby="dropdownId">
 					<a class="classify all   dropdown-item" href="#">All</a>
@@ -44,7 +47,7 @@
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-compress"></i> Size
+					<i class="fas fa-compress"></i> Size
 				</a>
 				<div class="dropdown-menu" aria-labelledby="dropdownId">
 					<a class="classify all  dropdown-item" href="#">All</a>
@@ -56,11 +59,24 @@
 				</div>
 			</li>
 			<li class="nav-item">
-                <a class="nav-link" href="/shopping-cart/">
-                    <i class="fas fa-shopping-cart"></i> Shopping Cart
-                    <span class="badge badge-success">{{session.cart.totalQty}}</span>
-                </a>
-            </li>
+				<a class="nav-link" href="/shopping-cart/">
+					<i class="fas fa-shopping-cart"></i> Shopping Cart
+					<span class="badge badge-success">{{session.cart.totalQty}}</span>
+				</a>
+			</li>
+			{{#if session.admin}}
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fas fa-user"></i> Hi, Member!
+				</a>
+				<div class="dropdown-menu" aria-labelledby="dropdownId">
+					<a class="dropdown-item" href="/users/profile">Update Profile</a>
+					<a class="dropdown-item" href="/admin/member-manage">Member Manager</a>
+					<a class="dropdown-item" href="/admin/order-manage">Order Manager</a>
+					<a class="dropdown-item" href="/users/logout">Logout</a>
+				</div>
+			</li>
+			{{else}} 
 			{{#if login}}
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -82,6 +98,7 @@
 					<i class="fas fa-sign-in-alt"></i> Login
 				</a>
 			</li>
+			{{/if}} 
 			{{/if}}
 		</ul>
 	</div>

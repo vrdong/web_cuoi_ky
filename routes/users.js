@@ -106,6 +106,7 @@ router.post('/profile', function (req, res, next) {
 router.use(csrfProtection);
 
 router.get('/profile', isLoggedIn, function (req, res, next) {
+  console.log(req.user.admin);
   Order.find({user: req.user},function(err, orders){
     if(err){
       return res.write('Error');
@@ -145,6 +146,7 @@ router.get('/profile', isLoggedIn, function (req, res, next) {
 })
 
 router.get('/logout', isLoggedIn, function (req, res, next) {
+  req.session.admin = null;
   req.logOut();
   res.redirect('/');
 })
@@ -171,7 +173,8 @@ router.post('/signup', passport.authenticate('local.signup', {
 }})
 
 router.get('/signin', function (req, res, next) {
-  var messages = req.flash('error')
+  var messages = req.flash('error');
+  
   res.render('users/signin', { csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0 });
 })
 
@@ -193,7 +196,7 @@ router.post('/signin', function (req, res, next) {
   // Make Request To VerifyURL
   request(verifyUrl, (err, response, body) => {
     body = JSON.parse(body);
-    console.log(body);
+    //console.log(body);
 
     // If Not Successful
     if (body.success !== undefined && !body.success) {
@@ -209,6 +212,11 @@ router.post('/signin', function (req, res, next) {
   failureRedirect: '/users/signin',
   failureFlash: true
 }), function (req, res, next) {
+  if(req.user.admin == 1){
+    req.session.admin = true;
+  } else {
+    req.session.admin = false;
+  }
   if (req.session.oldUrl) {
     var oldUrl = req.session.oldUrl;
     req.session.oldUrl = null;

@@ -24,9 +24,8 @@ paypal.configure({
 var app = express();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var adminRouter = require('./routes/admin');
 
-// rồi giờ bên file payment, m muốn hàm nào thì viết ở trỏng xóa bên index.js đi
-//cho nayt
 
 //Connect Database
 mongoose.connect('mongodb://vrdong:Dong123456@ds016298.mlab.com:16298/web_cuoi_ky');
@@ -66,6 +65,8 @@ app.use('/', indexRouter);
 //require('./routes/users')(upload)
 app.use('/users', usersRouter);
 require('./routes/payment')(app, paypal)
+
+app.use('/admin',adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -8,6 +8,7 @@ var Order =  require('../models/order');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+  
   Cate.find().then(function (cates) {
     Product.find({ type: 1 }).limit(4).then((woods) => {
       Product.find({ type: 2 }).limit(4).then((composites) => {
@@ -16,6 +17,7 @@ router.get('/', function (req, res, next) {
           Category.push({ cate: cates[0], products: woods });
           Category.push({ cate: cates[1], products: composites });
           Category.push({ cate: cates[2], products: combos });
+          //console.log(req.session.admin);
           res.render('index', { cates: Category });
         })
       })
