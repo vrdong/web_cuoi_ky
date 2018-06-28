@@ -83,19 +83,19 @@ router.post('/upload', (req, res) => {
   });
 });
 router.post('/profile', function (req, res, next) {
-  if (req.body.firstname != null) {
+  if (req.body.firstname != '') {
     User.collection.updateOne({ _id: req.user._id }, { '$set': { firstname: req.body.firstname } }, { upsert: true });
   }
 
-  if (req.body.lastname != null) {
+  if (req.body.lastname != '') {
     User.collection.updateOne({ _id: req.user._id }, { '$set': { lastname: req.body.lastname } }, { upsert: true });
   }
 
-  if (req.body.address != null) {
+  if (req.body.address != '') {
     User.collection.updateOne({ _id: req.user._id }, { '$set': { address: req.body.address } }, { upsert: true });
   }
   // console.log(req.body.password);
-  if (req.body.password != null) {
+  if (req.body.password != '') {
     var newUser = User();
     newUser.password = newUser.encryptPassword(req.body.password);
     User.collection.updateOne({ _id: req.user._id }, { '$set': { password: newUser.password } }, { upsert: true });
