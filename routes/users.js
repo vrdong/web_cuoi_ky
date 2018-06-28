@@ -6,7 +6,7 @@ const multer = require('multer');
 var path = require('path');
 var User = require('../models/user');
 var Order = require('../models/order');
-var Cart =  require('../models/cart');
+var Cart = require('../models/cart');
 
 //Set Storage 
 const storage = multer.diskStorage({
@@ -106,43 +106,45 @@ router.use(csrfProtection);
 
 router.get('/profile', isLoggedIn, function (req, res, next) {
   console.log(req.user.admin);
-  Order.find({user: req.user},function(err, orders){
-    if(err){
+  Order.find({ user: req.user }, function (err, orders) {
+    if (err) {
       return res.write('Error');
     }
-    req.session.historyOrder = orders; 
+    req.session.historyOrder = orders;
   });
   User.findOne({ _id: req.user._id }).then((user) => {
-    if (user.imagePath == undefined) {
+    console.log(user.imagePath);
+    if (user.imagePath == null) {
       imagePath = "http://via.placeholder.com/150x150";
     } else {
       imagePath = `/uploads/${user.imagePath}`;
     }
-    if (user.firstname == undefined && user.lastname == undefined) {
+    if (user.firstname === undefined && user.lastname === undefined) {
       name = "Anonymous"
       firstname = "none";
       lastname = "none";
     } else {
       name = user.firstname + user.lastname;
     }
-    if (user.address == undefined) {
+    if (user.address === undefined) {
       address = "Somewhere";
     } else {
       address = user.address;
     }
     orders = req.session.historyOrder;
     var cart;
-    orders.forEach(function(order){
-      cart = new Cart(order.cart);
-      var x = cart.generateArray();
-      order.item = null;
-      order.item = x;
-      //console.log(order.item);
-    })
-    //console.log(orders);
-    res.render('users/profile', { email: user.email, file: imagePath, name: name, address: address, firstname: user.firstname, lastname: user.lastname, orders: orders })
+    if (orders != null) {
+      orders.forEach(function (order) {
+        cart = new Cart(order.cart);
+        var x = cart.generateArray();
+        order.item = null;
+        order.item = x;
+      })
+    }
+    res.render('users/profile', {email: user.email, file: imagePath, name: name, address: address, firstname: user.firstname, lastname: user.lastname, orders: orders })
   })
 })
+
 
 router.get('/logout', isLoggedIn, function (req, res, next) {
   req.session.admin = null;
@@ -159,25 +161,7 @@ router.get('/signup', function (req, res, next) {
   res.render('users/signup', { csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0 });
 });
 
-router.post('/signup', passport.authenticate('local.signup', {
-  failureRedirect: '/users/signup',
-  failureFlash: true
-}), function (req, res, next) {
-  if (req.session.oldUrl) {
-    var oldUrl = req.session.oldUrl;
-    req.session.oldUrl = null;
-    res.redirect(oldUrl);
-  }else{
-    res.redirect('/users/profile');
-}})
-
-router.get('/signin', function (req, res, next) {
-  var messages = req.flash('error');
-  
-  res.render('users/signin', { csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0 });
-})
-
-router.post('/signin', function (req, res, next) {
+router.post('/signup', function (req, res, next) {
   var captcha = req.body['g-recaptcha-response'];
   if (
     captcha === undefined ||
@@ -206,12 +190,31 @@ router.post('/signin', function (req, res, next) {
     return next();
   })
 
-}, passport.authenticate('local.signin', {
+},passport.authenticate('local.signup', {
+  failureRedirect: '/users/signup',
+  failureFlash: true
+}), function (req, res, next) {
+  if (req.session.oldUrl) {
+    var oldUrl = req.session.oldUrl;
+    req.session.oldUrl = null;
+    res.redirect(oldUrl);
+  } else {
+    res.redirect('/users/profile');
+  }
+})
+
+router.get('/signin', function (req, res, next) {
+  var messages = req.flash('error');
+
+  res.render('users/signin', { csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0 });
+})
+
+router.post('/signin', passport.authenticate('local.signin', {
   // successRedirect: '/',
   failureRedirect: '/users/signin',
   failureFlash: true
 }), function (req, res, next) {
-  if(req.user.admin == 1){
+  if (req.user.admin == 1) {
     req.session.admin = true;
   } else {
     req.session.admin = false;
@@ -220,7 +223,7 @@ router.post('/signin', function (req, res, next) {
     var oldUrl = req.session.oldUrl;
     req.session.oldUrl = null;
     res.redirect(oldUrl);
-  }else{
+  } else {
     res.redirect('/users/profile');
   }
 })
@@ -241,5 +244,5 @@ function notLoggedIn(req, res, next) {
     return next();
   }
   res.redirect('/');
-} 
+}
 
