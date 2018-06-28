@@ -82,7 +82,6 @@ router.post('/upload', (req, res) => {
     }
   });
 });
-
 router.post('/profile', function (req, res, next) {
   if (req.body.firstname != null) {
     User.collection.updateOne({ _id: req.user._id }, { '$set': { firstname: req.body.firstname } }, { upsert: true });

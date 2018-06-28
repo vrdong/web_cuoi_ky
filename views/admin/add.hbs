@@ -1,0 +1,86 @@
+<div class="containerproduct edit-product" style="margin-top:150px">
+    <h4 class="m-y-2">Add product</h4>
+    <form role="form" method="POST" action="/admin/add">
+        <div class="form-group row">
+            <label class="col-lg-3 col-form-label form-control-label">Title</label>
+            <div class="col-lg-9">
+                <input class="form-control" type="text" value="" name="title">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-lg-3 col-form-label form-control-label">Description</label>
+            <div class="col-lg-9">
+                <input class="form-control" type="text" value="" name="description">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-lg-3 col-form-label form-control-label">Price</label>
+            <div class="col-lg-9">
+                <input class="form-control" type="text" value="" name="price">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-lg-3 col-form-label form-control-label">Model</label>
+            <div class="col-lg-9">
+                <select name="model">
+                    <option value="1">Picture</option>
+                    <option value="2">Photo</option>
+                    <option value="3">Merit</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-lg-3 col-form-label form-control-label">Material</label>
+            <div class="col-lg-9">
+                <select name="material">
+                    <option value="1">Wood</option>
+                    <option value="2">Metal</option>
+                    <option value="3">Plastic</option>
+                    <option value="4">Composite</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-lg-3 col-form-label form-control-label">Size</label>
+            <div class="col-lg-9">
+                <select name="size">
+                    <option value="1">10 x 15</option>
+                    <option value="2">30 x 70</option>
+                    <option value="3">120 x 80</option>
+                    <option value="4">160 x 90</option>
+                    <option value="5">200 x 150</option>
+                </select>
+            </div>
+        </div>
+        <label class="col-lg-3 col-form-label form-control-label"></label>
+        <div class="col-lg-9">
+            <button type="submit" value="{{imagePath}}" name="image" class="btn btn-primary">Save and Change</button>
+        </div>
+    </form>
+    <div class="form-group row">
+        <label class="col-lg-3 col-form-label form-control-label">Image</label>
+        <div class="col-lg-9">
+            {{#if file}}
+            <img src={{file}} alt="avatar" class="m-x-auto img-fluid" style="width:150px; height:150px"> 
+            {{else}}
+            <img src="http://via.placeholder.com/150x150" alt="avatar" class="m-x-auto img-fluid" style="width:150px; height:150px"> 
+            {{/if}}
+            <form action="/admin/upload" method="POST" enctype="multipart/form-data" class="custom-file">
+                <input name="myImage" type="file">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            {{#if hasErrors}} 
+            {{#each messages}}
+            <div class="alert alert-danger">
+                <p>{{this}}</p>
+            </div>
+            {{/each}} 
+            {{else}} 
+            {{#each messages}}
+            <div class="alert alert-success">
+                <p>{{this}}</p>
+            </div>
+            {{/each}} {{/if}}
+        </div>
+    </div>
+</div>

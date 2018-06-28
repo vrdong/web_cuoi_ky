@@ -64,8 +64,7 @@ app.use(function(req, res, next){
 app.use('/', indexRouter);
 //require('./routes/users')(upload)
 app.use('/users', usersRouter);
-require('./routes/payment')(app, paypal)
-
+require('./routes/payment')(app, paypal);
 app.use('/admin',adminRouter);
 
 // catch 404 and forward to error handler

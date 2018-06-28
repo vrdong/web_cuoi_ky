@@ -1,0 +1,65 @@
+<link rel='stylesheet' href='../public/stylesheets/shopping-cart.css' />
+<div class="container containercart" id="nocarousel">
+    <table id="cart" class="table table-hover table-condensed">
+        <thead>
+            <tr>
+                <th style="width:60%">Product</th>
+                <th style="width:10%">Price</th>
+                <th style="width:10%">Type</th>
+                <th style="width:10%">Size</th>
+                <th style="width:10%"></th>
+            </tr>
+        </thead>
+        {{#if products}}
+        <tbody>
+            {{#each products}}
+            <tr>
+                <td data-th="Product">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <img src="{{this.imagePath}}" alt="..." class="img-responsive" style="width: 100px ; height: 100px">
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-9">
+                            <h4 class="">{{this.title}}</h4>
+                            <p>{{this.description}}</p>
+                        </div>
+                    </div>
+                </td>
+                <td data-th="Price">${{this.price}}</td>
+                <td data-th="Type">
+                    {{this.type}}
+                </td>
+                <td data-th="Subtotal">{{this.kt}}</td>
+                <td class="actions" data-th="">
+                    <form action="/admin/edit" method="post" style="display:inline-block">
+                        <button type="submit" name="id" class="btn btn-info" value="{{this._id}}">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                    </form>
+                    <form action="/admin/delete" method="post" >
+                        <button type="submit" name="id" class="btn btn-danger" value="{{this._id}}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+        {{else}}
+        <div>No Items In Cart</div>
+        {{/if}}
+        <tfoot>
+            <tr>
+                <td>
+                    <a href="/admin/add" class="btn btn-success">
+                        Add Products
+                        <i class="fas fa-plus-square"></i>
+                    </a>
+                </td>
+                <td colspan="2" class=""></td>
+            </tr>
+        </tfoot>
+    </table>
+    <div style="height: 120px"></div>
+</div>
