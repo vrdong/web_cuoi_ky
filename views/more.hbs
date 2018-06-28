@@ -3,8 +3,8 @@
         <span class="maintext"> ALL PRODUCTS </span>
         <span class="subtext"> See Our All Available Products </span>
     </h1>
-    {{#each cates}}
     <div class="row">
+    {{#each cates}}
         {{#each this.products}}
         <div class="{{this.khung}} {{this.cl}} {{this.kt}} col-lg-3 col-md-4 col-sm-6" id="items">
             <div class="card d-flex h-100">
@@ -132,7 +132,7 @@
             </div>
         </div>
         {{/each}}
+    {{/each}}
     </div>
     <div style="clear: right"></div>
-    {{/each}}
 </div>
